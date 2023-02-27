@@ -1,0 +1,1316 @@
+swagger: "2.0"
+info:
+  description: "APIs to the Fauv Application"
+  version: "10.0.0"
+  title: "FAUV"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "fauv.com.br"
+basePath: "/v1.0"
+tags:
+- name: "Application Access Control"
+  description: "APIs to define login and register"
+- name: "Equipment"
+  description: "Equipment APIs"
+- name: "User"
+  description: "Equipment APIs"
+- name: "Unit"
+  description: "Unit APIs"
+- name: "Car"
+  description: "Car APIs"
+- name: "Model"
+  description: "Model APIs"
+- name: "Sample"
+  description: "Sample APIs"
+- name: "Employee"
+  description: "Employee APIs"
+schemes:
+- "https"
+paths:
+  /accessControl/login:
+    post:
+      tags:
+      - "Application Access Control"
+      summary: "Validate and tokenize the user to make requests"
+      operationId: "performLogin"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Perform login into the application"
+        required: true
+        schema:
+          $ref: "#/definitions/LoginForm"
+      responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/LoginDTO"
+  /accessControl/register:
+    post:
+      tags:
+      - "Application Access Control"
+      summary: "Request user access"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Request user accessn"
+        required: true
+        schema:
+          $ref: "#/definitions/RegisterForm"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+  /user:
+    post:
+      tags:
+      - "User"
+      summary:  "Create an user"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/UserForm"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UserDTO"
+    put:
+      tags:
+      - "User"
+      summary:  "Update an user"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/UserFormWithId"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UserDTO"
+    get:
+      tags:
+      - "User"
+      summary:  "get all users"
+      produces:
+      - "application/json"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            items:
+              type: "array"
+              $ref: "#/definitions/UserDTO"
+  /unit:
+    post:
+      tags:
+      - "Unit"
+      summary:  "Create an unit"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/UnitForm"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UnitDTO"
+    put:
+      tags:
+      - "Unit"
+      summary:  "Update an unit"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/UnitFormWithId"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UnitDTO"
+    get:
+      tags:
+      - "Unit"
+      summary:  "get all units"
+      produces:
+      - "application/json"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            items:
+              type: "array"
+              $ref: "#/definitions/UnitDTO" 
+  /unit/{id}:
+    get:
+      tags:
+      - "Unit"
+      summary:  "get an unit by id"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "unit id"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UnitDTO"   
+  /equipment:
+    post:
+      tags:
+      - "Equipment"
+      summary:  "Create an equipment"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/EquipmentForm"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/EquipmentDTO"
+    put:
+      tags:
+      - "Equipment"
+      summary:  "Update an equipment"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Request user accessn"
+        required: true
+        schema:
+          $ref: "#/definitions/EquipmentFormWithId"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/EquipmentDTO"
+    get:
+      tags:
+      - "Equipment"
+      summary:  "get all equipment"
+      produces:
+      - "application/json"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            items:
+              type: 'array'
+              $ref: "#/definitions/EquipmentDTO"
+  /equipment/{id}:
+    get:
+      tags:
+      - "Equipment"
+      summary:  "get an equipment by id"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "equipment id"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/EquipmentDTO"
+  /car:
+    post:
+      tags:
+      - "Car"
+      summary:  "Create a car"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/CarForm"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CarDTO"
+    put:
+      tags:
+      - "Car"
+      summary:  "Update a car"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/CarDTO"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CarDTO"
+    get:
+      tags:
+      - "Car"
+      summary:  "get all cars"
+      produces:
+      - "application/json"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            items:
+              type: "array"
+              $ref: "#/definitions/CarDTO"
+  /car/{id}:
+    get:
+      tags:
+      - "Car"
+      summary:  "get a car by id"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "car id"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CarDTO"
+  /model:
+    post:
+      tags:
+      - "Model"
+      summary:  "Create a model"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/ModelForm"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ModelDTO"
+    put:
+      tags:
+      - "Model"
+      summary:  "Update a model"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/ModelDTO"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ModelDTO"
+    get:
+      tags:
+      - "Model"
+      summary:  "get all models"
+      produces:
+      - "application/json"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            items:
+              type: "array"
+              $ref: "#/definitions/ModelDTO" 
+  /model/{id}:
+    get:
+      tags:
+      - "Model"
+      summary:  "get a model by id"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "mode id"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ModelDTO"
+  /model/preview:
+   post:
+      tags:
+      - "Model"
+      summary:  "Preview a model"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/ModelPreview"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ModelForm"
+  /sample:
+    post:
+      tags:
+      - "Sample"
+      summary:  "Create a sample"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/SampleForm"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/SampleDTO"
+    put:
+      tags:
+      - "Sample"
+      summary:  "Update a sample"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/SampleDTO"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/SampleDTO"
+    get:
+      tags:
+      - "Sample"
+      summary:  "get all samples"
+      produces:
+      - "application/json"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            items:
+              type: "array"
+              $ref: "#/definitions/SampleDTO"
+  /employee:
+    post:
+      tags:
+      - "Employee"
+      summary:  "Create an employee"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/EmployeeForm"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/EmployeeDTO"
+    put:
+      tags:
+      - "Employee"
+      summary:  "Update an employee"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/EmployeeDTO"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/EmployeeDTO"
+    get:
+      tags:
+      - "Employee"
+      summary:  "get all employees"
+      produces:
+      - "application/json"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            items:
+              type: "array"
+              $ref: "#/definitions/EmployeeDTO"
+definitions:
+  LoginForm:
+    type: "object"
+    required:
+    - "username"
+    - "password"
+    properties:
+      vwId:
+        type: "string"
+        example: "123456789123 or 12345678912345"
+      password:
+        type: "string"
+        example: "randomPassword"
+  RoleDTO:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "adminstrator | inspector | consultant"
+  LoginDTO:
+    type: "object"
+    properties:
+      token:
+        type: "string"
+        example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTY3ODkiLCJjdXJyZW50X3JvbGVzIjoiW3tcImlkXCI6MSxcIm5hbWVcIjpcIkFETUlOXCIsXCJhZG1pblwiOnRydWUsXCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsImlzcyI6IkZBVVZfQVVUSEVOVElUT1IiLCJleHAiOjE2NzUyMzA1NzksImlhdCI6MTY3NTIxNjE3OX0.Pr_YzcJlzpDCQiDyucvwlFmg_6l5tlwxZlY5O7DPWDGl5SEJVblRUb5Svn0osx8sYpSvUZItM9jT9krLGp052g"
+  RegisterForm:
+    type: "object"
+    properties:
+      vwId:
+        type: "string"
+        example: "091823981647193"
+      password:
+        type: "string"
+        example: "1ASLqwsdkASKEWsdkqwe"
+      passwordConfirmation:
+        type: "string"
+        example: "1ASLqwsdkASKEWsdkqwe"
+      roles:
+            type: "array"
+            items: 
+              type: "string"
+            example: ["adminstrator","inspector","consultant"]
+  UserForm:
+    type: "object"
+    properties:
+      vwId:
+        type: "string"
+        example: "ABC123456"
+      active:
+        type: "boolean"
+        example: true
+      roles:
+            type: "array"
+            items: 
+              type: "string"
+            example: ["adminstrator","inspector","consultant"]
+  UserFormWithId:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        example: 1
+      vwId:
+        type: "string"
+        example: "ABC123456"
+      active:
+        type: "boolean"
+        example: true
+      roles:
+            type: "array"
+            items: 
+              type: "string"
+            example: ["adminstrator","inspector","consultant"]          
+  UserDTO:
+    type: "object"
+    properties:
+      vwId:
+        type: "string"
+        example: "ABC123"
+      active:
+        type: "boolean"
+        example: true
+      roles:
+        items:
+            type: "array"
+            $ref: "#/definitions/RoleDTO"
+  UserRequestDTO:
+    type: "object"
+    properties:
+      registerId:
+        type: "string"
+        example: "ABC123"
+      vwId:
+        type: "string"
+        example: "ABC123"
+      active:
+        type: "boolean"
+        example: false
+      roles:
+        items:
+            type: "array"
+            $ref: "#/definitions/RoleDTO"
+  UnitForm:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "Anchieta"
+      active:
+        type: "boolean"
+        example: true
+  UnitFormWithId:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        example: 1
+      name:
+        type: "string"
+        example: "Anchieta"
+      active:
+        type: "boolean"
+        example: true
+  UnitDTO:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+        example: "Anchieta"
+      active:
+        type: "boolean"
+        example: true
+  EquipmentDTO:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        example: "AK12"
+      active:
+        type: "boolean"
+        example: true
+      unit:
+        type: "object"
+        $ref: "#/definitions/UnitDTO"
+  EquipmentForm:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        example: "AK12"
+      active:
+        type: "boolean"
+        example: true
+      unitId:
+        type: "number"
+        example: 1
+  EquipmentFormWithId:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      id:
+        type: "integer"
+        example: 1
+      name:
+        type: "string"
+        example: "AK12"
+      active:
+        type: "boolean"
+        example: true
+      unitId:
+        type: "number"
+        example: 1
+  CarForm:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "Anchieta"
+      active:
+        type: "boolean"
+        example: true
+      unitId:
+        type: "number"
+        example: 1
+  CarDTO:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+        example: "Anchieta"
+      active:
+        type: "boolean"
+        example: true
+      unit:
+        type: "object"
+        $ref: "#/definitions/UnitDTO"
+  NominalAxisCoordinateForm:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      lowerTolerance:
+        type: "number"
+        example: -125.321
+      higherTolerance:
+        type: "number"
+        example: 125.321
+      axis:
+        enum:
+           - "X"
+           - "Y"
+           - "Z"
+           - "T"
+           - "D"
+        example: "X"
+  NominalAxisCoordinateDTO:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      lowerTolerance:
+        type: "number"
+        example: -125.321
+      higherTolerance:
+        type: "number"
+        example: 125.321
+      axis:
+        enum:
+           - "X"
+           - "Y"
+           - "Z"
+           - "T"
+           - "D"
+        example: "X"
+      pmpId:
+        type: "integer"
+        format: "int64"        
+  PmpForm:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "PONTO A"
+      workingOn:
+        enum:
+           - "X"
+           - "Y"
+           - "Z"
+           - "T"
+           - "D"
+        example: "X"
+      x:
+        type: "number"
+        example: -125.321
+      y:
+        type: "number"
+        example: -125.321
+      z:
+        type: "number"
+        example: -125.321
+      active:
+        type: "boolean"
+        example: true
+      axisCoordinateList:
+        items:
+          type: "array"
+          $ref: "#/definitions/NominalAxisCoordinateForm"
+  PmpDTO:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        example: "PONTO A"
+      workingOn:
+        enum:
+           - "X"
+           - "Y"
+           - "Z"
+           - "T"
+           - "D"
+        example: "X"
+      x:
+        type: "number"
+        example: -125.321
+      y:
+        type: "number"
+        example: -125.321
+      z:
+        type: "number"
+        example: -125.321
+      active:
+        type: "boolean"
+        example: true
+      axisCoordinateList:
+        items:
+          type: "array"
+          $ref: "#/definitions/NominalAxisCoordinateDTO"
+  FmForm:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "FM01"
+      higherTolerance:
+        type: "number"
+        example: 123.321
+      lowerTolerance:
+        type: "number"
+        example: 124.321
+      defaultValue:
+        type: "number"
+        example: 124.321
+      axis:
+        enum:
+           - "X"
+           - "Y"
+           - "Z"
+           - "T"
+           - "D"
+        example: "X"
+      catalog_type:
+        enum :
+          - "GRUNDGEOMETRIE"
+          - "DICHTIGKEIT"
+          - "SYMMETRIEVERLAUF"
+          - "UMRISS UND BÜNDIGKEIT"
+          - "FMK PLUS"
+        example: "GRUNDGEOMETRIE"
+      pmpList:
+        items:
+          type: "array"
+          $ref: "#/definitions/PmpForm"
+      photo:
+        type: "string"
+        format: binary
+      level:
+        enum:
+          - "LOW"
+          - "MEDIUM"
+          - "HIGH"
+          - "CRITICAL"
+      fmImpactList:
+        items:
+          type: "array"
+          $ref: "#/definitions/FmDescriptionForm"
+      active:
+        type: "boolean"
+        example: true
+  FmDTO:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 1
+      name:
+        type: "string"
+        example: "FM01"
+      higherTolerance:
+        type: "number"
+        example: 123.321
+      lowerTolerance:
+        type: "number"
+        example: 124.321
+      defaultValue:
+        type: "number"
+        example: 124.321
+      axis:
+        enum:
+           - "X"
+           - "Y"
+           - "Z"
+           - "T"
+           - "D"
+        example: "X"
+      catalog_type:
+        enum :
+          - "GRUNDGEOMETRIE"
+          - "DICHTIGKEIT"
+          - "SYMMETRIEVERLAUF"
+          - "UMRISS UND BÜNDIGKEIT"
+          - "FMK PLUS"
+        example: "GRUNDGEOMETRIE"    
+      pmpList:
+        items:
+          type: "array"
+          $ref: "#/definitions/PmpDTO"
+      photo:
+        type: "string"
+        format: binary
+      level:
+        enum:
+          - "LOW"
+          - "MEDIUM"
+          - "HIGH"
+          - "CRITICAL"
+      fmImpactList:
+        items:
+          type: "array"
+          $ref: "#/definitions/FmDescriptionDTO"
+      active:
+        type: "boolean"
+        example: true
+  ModelPreview:
+    type: "object"
+    properties:
+      dmoFile:
+        type: "string"
+        format: binary
+      csvFile:
+        type: "string"
+        format: binary
+  ModelForm:
+    type: "object"
+    properties:
+      partNumber:
+        type: "string"
+        example: "SHD13NH4"
+      stepDescription:
+        type: "string"
+        example: "SHD13NH4"
+      car:
+        type: "object"
+        $ref: "#/definitions/CarDTO"
+      pmpList:
+        items:
+          type: "array"
+          $ref: "#/definitions/PmpForm"
+      fmList:
+        items:
+          type: "array"
+          $ref: "#/definitions/FmForm"
+      active:
+        type: "boolean"
+        example: true
+  ModelDTO:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        example: 1
+      partNumber:
+        type: "string"
+        example: "SHD13NH4"
+      stepType:
+        type: "string"
+        example: "SHD13NH4"
+      pmpList:
+        items:
+          type: "array"
+          $ref: "#/definitions/PmpDTO"
+      fmList:
+        items:
+          type: "array"
+          $ref: "#/definitions/FmDTO"
+      active:
+        type: "boolean"
+        example: true
+  MeasurementAxisCoordinateDTO:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        example: 1
+      name:
+        type: "string"
+      axis:
+        enum:
+           - "X"
+           - "Y"
+           - "Z"
+           - "T"
+           - "D"
+        example: "X"
+      result:
+        type: "number"
+        example: -125.321
+      resultType:
+        enum:
+          - "INTOL"
+          - "OUTOL"
+          - "NOT FOUND"
+        example: "INTOL" 
+  PmpSampleDTO:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      x:
+        type: "number"
+        example: -125.321
+      y:
+        type: "number"
+        example: -125.321
+      z:
+        type: "number"
+        example: -125.321
+      measuremnetAxisCoordinateList:
+        items:
+          type: "array"
+          $ref: "#/definitions/MeasurementAxisCoordinateDTO"
+  FmSampleDTO:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      result:
+        type: "number"
+        example: -125.321 
+      resultType:
+        enum:
+          - "INTOL"
+          - "OUTOL"
+          - "NOT FOUND"
+        example: "INTOL"
+  SampleForm:
+    type: "object"
+    properties:
+      file:
+        type: "string"
+        format: binary
+  SampleDTO:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      uploadDate:
+        type: "string"
+        format: "2020-07-10 15:00:00"
+        example: "2020-07-10 15:00:00 (year/month/day) hours:minutes:seconds"
+      uploadUser:
+        type: "object"
+        $ref: "#/definitions/UserDTO"
+      model:
+        type: "object"
+        $ref: "#/definitions/ModelDTO"
+      equipment:
+        type: "object"
+        $ref: "#/definitions/EquipmentDTO"
+      scan_init_date:
+        type: "string"
+        format: "2020-07-10 15:00:00.000"
+        example: "2020-07-10 15:00:00 (year/month/day) hours:minutes:seconds"
+      scan_end_date:
+        type: "string"
+        format: "2020-07-10 15:00:00.000"
+        example: "2020-07-10 15:00:00 (year/month/day) hours:minutes:seconds"
+      chassi:
+        type: "string"
+        example: "094I8MJF894KLOMF984"
+      pmpSampleList:
+        items:
+          type: "array"
+          $ref: "#/definitions/PmpSampleDTO"
+      fmSampleList:
+        items:
+            type: "array"
+            $ref: "#/definitions/FmSampleDTO"
+  EmployeeDTO:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      vwId:
+        type: "string"
+        example: "12323dfff3"
+      name:
+        type: "string"
+        example: "Igor Carvalho"
+      email:
+        type: "string"
+        example: "123d1sed@vm.com"
+      phone:
+        type: "string"
+        example: "(11) 98387383882"
+      active:
+        type: "boolean"
+        example: true
+  EmployeeForm:
+    type: "object"
+    properties:
+      vwId:
+        type: "string"
+        example: "12323dfff3"
+      name:
+        type: "string"
+        example: "Igor Carvalho"
+      email:
+        type: "string"
+        example: "123d1sed@vm.com"
+      phone:
+        type: "string"
+        example: "(11) 98387383882"
+      active:
+        type: "boolean"
+        example: true
+  EmployeeFormWithId:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        example: 1
+      vwId:
+        type: "string"
+        example: "12323dfff3"
+      name:
+        type: "string"
+        example: "Igor Carvalho"
+      email:
+        type: "string"
+        example: "123d1sed@vm.com"
+      phone:
+        type: "string"
+        example: "(11) 98387383882"
+      active:
+        type: "boolean"
+        example: true
+  FmDescriptionForm:
+    type: "object"
+    properties:
+      info:
+        type: "integer"
+        example: 1
+  FmDescriptionDTO:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        example: 1
+      info:
+        type: "integer"
+        example: 1
+  ApiResponseError:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+        example: 401
+      message:
+        type: "string"
+        example: "Invalid"
+  
