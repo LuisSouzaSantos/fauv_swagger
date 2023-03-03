@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   description: "APIs to the Fauv Application"
-  version: "10.0.0"
+  version: "11.0.0"
   title: "FAUV"
   license:
     name: "Apache 2.0"
@@ -988,7 +988,7 @@ definitions:
            - "T"
            - "D"
         example: "X"
-      catalog_type:
+      catalogType:
         enum :
           - "GRUNDGEOMETRIE"
           - "DICHTIGKEIT"
@@ -1043,7 +1043,7 @@ definitions:
            - "T"
            - "D"
         example: "X"
-      catalog_type:
+      catalogType:
         enum :
           - "GRUNDGEOMETRIE"
           - "DICHTIGKEIT"
@@ -1112,9 +1112,12 @@ definitions:
       partNumber:
         type: "string"
         example: "SHD13NH4"
-      stepType:
+      stepDescription:
         type: "string"
         example: "SHD13NH4"
+      car:
+        type: "object"
+        $ref: "#/definitions/CarDTO"
       pmpList:
         items:
           type: "array"
@@ -1292,8 +1295,8 @@ definitions:
     type: "object"
     properties:
       info:
-        type: "integer"
-        example: 1
+        type: "string"
+        example: "Erro na porta"
   FmDescriptionDTO:
     type: "object"
     properties:
@@ -1301,8 +1304,8 @@ definitions:
         type: "integer"
         example: 1
       info:
-        type: "integer"
-        example: 1
+        type: "string"
+        example: "Erro na porta"
   ApiResponseError:
     type: "object"
     properties:
