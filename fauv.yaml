@@ -1367,9 +1367,10 @@ definitions:
         type: "string"
         format: "2020-07-10 15:00:00.000"
         example: "2020-07-10 15:00:00 (year/month/day) hours:minutes:seconds"
-      chassi:
+      pin:
         type: "string"
-        example: "094I8MJF894KLOMF984"
+        format: "1234567891"
+        example: "888888888"
       pmpSampleList:
         items:
           type: "array"
