@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
-  description: "APIs to the Fauv Application"
-  version: "11.0.0"
+  description: "APIs to the FAUV Analyzer Application"
+  version: "12.0.0"
   title: "FAUV"
   license:
     name: "Apache 2.0"
@@ -11,9 +11,9 @@ basePath: "/v1.0"
 tags:
 - name: "Application Access Control"
   description: "APIs to define login and register"
-- name: "Equipment"
-  description: "Equipment APIs"
 - name: "User"
+  description: "User APIs"
+- name: "Equipment"
   description: "Equipment APIs"
 - name: "Unit"
   description: "Unit APIs"
@@ -61,7 +61,7 @@ paths:
         "200":
           description: "OK"
           schema:
-            $ref: "#/definitions/LoginDTO"
+            $ref: "#/definitions/AuthenticationDTO"
   /accessControl/register:
     post:
       tags:
@@ -74,10 +74,10 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "Request user accessn"
+        description: "Request access to the application"
         required: true
         schema:
-          $ref: "#/definitions/RegisterForm"
+          $ref: "#/definitions/UserForm"
       responses:
         "500":
           description: "SERVER ERROR"
@@ -89,7 +89,7 @@ paths:
     post:
       tags:
       - "User"
-      summary:  "Create an user"
+      summary: "Create an user by system admin"
       consumes:
       - "application/json"
       produces:
@@ -101,6 +101,14 @@ paths:
         schema:
           $ref: "#/definitions/UserForm"
       responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
         "500":
           description: "SERVER ERROR"
           schema:
@@ -122,8 +130,16 @@ paths:
         name: "body"
         required: true
         schema:
-          $ref: "#/definitions/UserFormWithId"
+          $ref: "#/definitions/UserDTO"
       responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
         "500":
           description: "SERVER ERROR"
           schema:
@@ -139,6 +155,14 @@ paths:
       produces:
       - "application/json"
       responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
         "500":
           description: "SERVER ERROR"
           schema:
@@ -149,6 +173,67 @@ paths:
             items:
               type: "array"
               $ref: "#/definitions/UserDTO"
+  /user/{id}:
+    get:
+      tags:
+      - "User"
+      summary:  "get an user by id"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "unit id"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UserDTO"
+  /user/password:
+    post:
+      tags:
+      - "User"
+      summary:  "Update User password"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/PasswordDTO"
+      responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
   /unit:
     post:
       tags:
@@ -165,6 +250,14 @@ paths:
         schema:
           $ref: "#/definitions/UnitForm"
       responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
         "500":
           description: "SERVER ERROR"
           schema:
@@ -186,8 +279,16 @@ paths:
         name: "body"
         required: true
         schema:
-          $ref: "#/definitions/UnitFormWithId"
+          $ref: "#/definitions/UnitDTO"
       responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
         "500":
           description: "SERVER ERROR"
           schema:
@@ -228,6 +329,14 @@ paths:
         type: "integer"
         format: "int64"
       responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
         "500":
           description: "SERVER ERROR"
           schema:
@@ -252,6 +361,14 @@ paths:
         schema:
           $ref: "#/definitions/EquipmentForm"
       responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
         "500":
           description: "SERVER ERROR"
           schema:
@@ -316,6 +433,14 @@ paths:
         type: "integer"
         format: "int64"
       responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
         "500":
           description: "SERVER ERROR"
           schema:
@@ -340,6 +465,14 @@ paths:
         schema:
           $ref: "#/definitions/CarForm"
       responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
         "500":
           description: "SERVER ERROR"
           schema:
@@ -363,6 +496,14 @@ paths:
         schema:
           $ref: "#/definitions/CarDTO"
       responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
         "500":
           description: "SERVER ERROR"
           schema:
@@ -403,6 +544,14 @@ paths:
         type: "integer"
         format: "int64"
       responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
         "500":
           description: "SERVER ERROR"
           schema:
@@ -427,6 +576,14 @@ paths:
         schema:
           $ref: "#/definitions/ModelForm"
       responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
         "500":
           description: "SERVER ERROR"
           schema:
@@ -450,6 +607,14 @@ paths:
         schema:
           $ref: "#/definitions/ModelDTO"
       responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
         "500":
           description: "SERVER ERROR"
           schema:
@@ -490,6 +655,14 @@ paths:
         type: "integer"
         format: "int64"
       responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
         "500":
           description: "SERVER ERROR"
           schema:
@@ -504,16 +677,27 @@ paths:
       - "Model"
       summary:  "Preview a model"
       consumes:
-      - "application/json"
+        - "multipart/form-data"
       produces:
       - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        required: true
-        schema:
-          $ref: "#/definitions/ModelPreview"
+        - in: "formData"
+          name: "dmoFile"
+          type: "file"
+          description: "DMO file to upload."
+        - in: "formData"
+          name: "csvFile"
+          type: "file"
+          description: "Csv file to upload."
       responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
         "500":
           description: "SERVER ERROR"
           schema:
@@ -526,40 +710,16 @@ paths:
     post:
       tags:
       - "Sample"
-      summary:  "Create a sample"
+      summary:  "Upload a sample"
       consumes:
-      - "application/json"
+        - "multipart/form-data"
       produces:
       - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        required: true
-        schema:
-          $ref: "#/definitions/SampleForm"
-      responses:
-        "500":
-          description: "SERVER ERROR"
-          schema:
-            $ref: "#/definitions/ApiResponseError"
-        "200":
-          description: "OK"
-          schema:
-            $ref: "#/definitions/SampleDTO"
-    put:
-      tags:
-      - "Sample"
-      summary:  "Update a sample"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        required: true
-        schema:
-          $ref: "#/definitions/SampleDTO"
+        - in: "formData"
+          name: "dmoFile"
+          type: "file"
+          description: "DMO file to upload."
       responses:
         "500":
           description: "SERVER ERROR"
@@ -586,6 +746,37 @@ paths:
             items:
               type: "array"
               $ref: "#/definitions/SampleDTO"
+  /sample/{id}:
+    get:
+      tags:
+        - "Sample"
+      summary:  "get a sample by id"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "mode id"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "401":
+          description: "UNAUTHORIZED"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "403":
+          description: "FORBIDDEN"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/SampleDTO"          
   /employee:
     post:
       tags:
@@ -669,29 +860,15 @@ definitions:
       name:
         type: "string"
         example: "adminstrator | inspector | consultant"
-  LoginDTO:
+      admin:
+        type: "boolean"
+        example: true
+  AuthenticationDTO:
     type: "object"
     properties:
       token:
         type: "string"
         example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTY3ODkiLCJjdXJyZW50X3JvbGVzIjoiW3tcImlkXCI6MSxcIm5hbWVcIjpcIkFETUlOXCIsXCJhZG1pblwiOnRydWUsXCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsImlzcyI6IkZBVVZfQVVUSEVOVElUT1IiLCJleHAiOjE2NzUyMzA1NzksImlhdCI6MTY3NTIxNjE3OX0.Pr_YzcJlzpDCQiDyucvwlFmg_6l5tlwxZlY5O7DPWDGl5SEJVblRUb5Svn0osx8sYpSvUZItM9jT9krLGp052g"
-  RegisterForm:
-    type: "object"
-    properties:
-      vwId:
-        type: "string"
-        example: "091823981647193"
-      password:
-        type: "string"
-        example: "1ASLqwsdkASKEWsdkqwe"
-      passwordConfirmation:
-        type: "string"
-        example: "1ASLqwsdkASKEWsdkqwe"
-      roles:
-            type: "array"
-            items: 
-              type: "string"
-            example: ["adminstrator","inspector","consultant"]
   UserForm:
     type: "object"
     properties:
@@ -701,28 +878,14 @@ definitions:
       active:
         type: "boolean"
         example: true
+      email: 
+        type: "string"
+        example: "igor@hotmail.com"
       roles:
             type: "array"
             items: 
               type: "string"
             example: ["adminstrator","inspector","consultant"]
-  UserFormWithId:
-    type: "object"
-    properties:
-      id:
-        type: "integer"
-        example: 1
-      vwId:
-        type: "string"
-        example: "ABC123456"
-      active:
-        type: "boolean"
-        example: true
-      roles:
-            type: "array"
-            items: 
-              type: "string"
-            example: ["adminstrator","inspector","consultant"]          
   UserDTO:
     type: "object"
     properties:
@@ -736,37 +899,18 @@ definitions:
         items:
             type: "array"
             $ref: "#/definitions/RoleDTO"
-  UserRequestDTO:
+  PasswordDTO:
     type: "object"
     properties:
-      registerId:
+      password:
         type: "string"
         example: "ABC123"
-      vwId:
+      passwordConfirmation:
         type: "string"
         example: "ABC123"
-      active:
-        type: "boolean"
-        example: false
-      roles:
-        items:
-            type: "array"
-            $ref: "#/definitions/RoleDTO"
   UnitForm:
     type: "object"
     properties:
-      name:
-        type: "string"
-        example: "Anchieta"
-      active:
-        type: "boolean"
-        example: true
-  UnitFormWithId:
-    type: "object"
-    properties:
-      id:
-        type: "integer"
-        example: 1
       name:
         type: "string"
         example: "Anchieta"
@@ -784,6 +928,20 @@ definitions:
       active:
         type: "boolean"
         example: true
+  EquipmentForm:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        example: "AK12"
+      active:
+        type: "boolean"
+        example: true
+      unitId:
+        type: "number"
+        example: 1
   EquipmentDTO:
     type: "object"
     required:
@@ -801,20 +959,6 @@ definitions:
       unit:
         type: "object"
         $ref: "#/definitions/UnitDTO"
-  EquipmentForm:
-    type: "object"
-    required:
-    - "name"
-    properties:
-      name:
-        type: "string"
-        example: "AK12"
-      active:
-        type: "boolean"
-        example: true
-      unitId:
-        type: "number"
-        example: 1
   EquipmentFormWithId:
     type: "object"
     required:
@@ -876,6 +1020,7 @@ definitions:
            - "Z"
            - "T"
            - "D"
+           - "NOT RECOGNIZED"
         example: "X"
   NominalAxisCoordinateDTO:
     type: "object"
@@ -898,23 +1043,25 @@ definitions:
            - "Z"
            - "T"
            - "D"
+           - "NOT RECOGNIZED"
         example: "X"
       pmpId:
         type: "integer"
         format: "int64"        
-  PmpForm:
+  NominalPmpForm:
     type: "object"
     properties:
       name:
         type: "string"
         example: "PONTO A"
-      workingOn:
+      axis:
         enum:
            - "X"
            - "Y"
            - "Z"
            - "T"
            - "D"
+           - "NOT RECOGNIZED"
         example: "X"
       x:
         type: "number"
@@ -932,7 +1079,7 @@ definitions:
         items:
           type: "array"
           $ref: "#/definitions/NominalAxisCoordinateForm"
-  PmpDTO:
+  NominalPmpDTO:
     type: "object"
     properties:
       id:
@@ -941,13 +1088,14 @@ definitions:
       name:
         type: "string"
         example: "PONTO A"
-      workingOn:
+      axis:
         enum:
            - "X"
            - "Y"
            - "Z"
            - "T"
            - "D"
+           - "NOT RECOGNIZED"
         example: "X"
       x:
         type: "number"
@@ -965,7 +1113,7 @@ definitions:
         items:
           type: "array"
           $ref: "#/definitions/NominalAxisCoordinateDTO"
-  FmForm:
+  NominalFmForm:
     type: "object"
     properties:
       name:
@@ -987,6 +1135,7 @@ definitions:
            - "Z"
            - "T"
            - "D"
+           - "NOT RECOGNIZED"
         example: "X"
       catalogType:
         enum :
@@ -998,8 +1147,9 @@ definitions:
         example: "GRUNDGEOMETRIE"
       pmpList:
         items:
-          type: "array"
-          $ref: "#/definitions/PmpForm"
+          items: 
+            type: "string"
+            example: ["PONTO_1","PONTO_2","PONTO_3"]
       photo:
         type: "string"
         format: binary
@@ -1016,7 +1166,7 @@ definitions:
       active:
         type: "boolean"
         example: true
-  FmDTO:
+  NominalFmDTO:
     type: "object"
     properties:
       id:
@@ -1042,6 +1192,7 @@ definitions:
            - "Z"
            - "T"
            - "D"
+           - "NOT RECOGNIZED"
         example: "X"
       catalogType:
         enum :
@@ -1054,7 +1205,7 @@ definitions:
       pmpList:
         items:
           type: "array"
-          $ref: "#/definitions/PmpDTO"
+          $ref: "#/definitions/NominalPmpDTO"
       photo:
         type: "string"
         format: binary
@@ -1071,15 +1222,6 @@ definitions:
       active:
         type: "boolean"
         example: true
-  ModelPreview:
-    type: "object"
-    properties:
-      dmoFile:
-        type: "string"
-        format: binary
-      csvFile:
-        type: "string"
-        format: binary
   ModelForm:
     type: "object"
     properties:
@@ -1095,11 +1237,11 @@ definitions:
       pmpList:
         items:
           type: "array"
-          $ref: "#/definitions/PmpForm"
+          $ref: "#/definitions/NominalPmpForm"
       fmList:
         items:
           type: "array"
-          $ref: "#/definitions/FmForm"
+          $ref: "#/definitions/NominalFmForm"
       active:
         type: "boolean"
         example: true
@@ -1121,11 +1263,11 @@ definitions:
       pmpList:
         items:
           type: "array"
-          $ref: "#/definitions/PmpDTO"
+          $ref: "#/definitions/NominalPmpDTO"
       fmList:
         items:
           type: "array"
-          $ref: "#/definitions/FmDTO"
+          $ref: "#/definitions/NominalFmDTO"
       active:
         type: "boolean"
         example: true
@@ -1144,22 +1286,26 @@ definitions:
            - "Z"
            - "T"
            - "D"
+           - "NOT RECOGNIZED"
         example: "X"
-      result:
+      value:
         type: "number"
         example: -125.321
-      resultType:
+      toleranceType:
         enum:
           - "INTOL"
           - "OUTOL"
-          - "NOT FOUND"
+          - "NOT RECOGNIZED"
         example: "INTOL" 
-  PmpSampleDTO:
+  MeasurementPmpDTO:
     type: "object"
     properties:
       id:
         type: "integer"
         format: "int64"
+      name:
+        type: "string"
+        example: "PONTO_1"
       x:
         type: "number"
         example: -125.321
@@ -1169,31 +1315,31 @@ definitions:
       z:
         type: "number"
         example: -125.321
+      nominalPmpId:
+        type: "number"
+        example: 2
       measuremnetAxisCoordinateList:
         items:
           type: "array"
           $ref: "#/definitions/MeasurementAxisCoordinateDTO"
-  FmSampleDTO:
+  MeasurementFmDTO:
     type: "object"
     properties:
       id:
         type: "integer"
         format: "int64"
-      result:
+      value:
         type: "number"
         example: -125.321 
-      resultType:
+      toleranceType:
         enum:
           - "INTOL"
           - "OUTOL"
-          - "NOT FOUND"
+          - "NOT RECOGNIZED"
         example: "INTOL"
-  SampleForm:
-    type: "object"
-    properties:
-      file:
-        type: "string"
-        format: binary
+      nominalFmId:
+        type: "number"
+        example: 2
   SampleDTO:
     type: "object"
     properties:
@@ -1227,11 +1373,17 @@ definitions:
       pmpSampleList:
         items:
           type: "array"
-          $ref: "#/definitions/PmpSampleDTO"
+          $ref: "#/definitions/MeasurementPmpDTO"
       fmSampleList:
         items:
             type: "array"
-            $ref: "#/definitions/FmSampleDTO"
+            $ref: "#/definitions/MeasurementFmDTO"
+      status:
+        enum:
+          - "SUCCESS"
+          - "ERROR"
+          - "WARNING"
+        example: "SUCCESS"
   EmployeeDTO:
     type: "object"
     properties:
@@ -1306,6 +1458,106 @@ definitions:
       info:
         type: "string"
         example: "Erro na porta"
+  GraphicForm:
+    type: "object"
+    properties:
+      start_date:
+        type: "string"
+        example: "10/10/2010"
+      end_date:
+        type: "string"
+        example: "10/10/2010"
+      carId:
+        type: "number"
+        example: 1
+      equipmentId:
+        type: "number"
+        example: 1
+  GraphicDTO:
+    type: "object"
+    properties:
+      fmName:
+        type: "string"
+        example: "FM_001"
+      catalogType:
+        enum :
+          - "GRUNDGEOMETRIE"
+          - "DICHTIGKEIT"
+          - "SYMMETRIEVERLAUF"
+          - "UMRISS UND BÜNDIGKEIT"
+          - "FMK PLUS"
+        example: "GRUNDGEOMETRIE"   
+      higherTolerance:
+        type: "number"
+        example: 2.7
+      lowerTolerance:
+        type: "number"
+        example: -0.3
+      nominalTolerance:
+        type: "number"
+        example: 1.2
+      zoneDivision:
+        type: "number"
+        example: 0.5
+      cp:
+        type: "number"
+        example: 0.5
+      cpk:
+        type: "number"
+        example: 0.5
+      pp:
+        type: "number"
+        example: 0.5
+      ppk:
+        type: "number"
+        example: 0.5
+      sigmaLevel:
+        type: "number"
+        example: 5.09
+      normalDistribution:
+        type: "string"
+        example: "1.2%"
+      average:
+        type: "string"
+        example: "2.5mm"
+      standardDeviation:
+        type: "string"
+        example: "3.5mm"
+      graphicMeasurementFmDTOList:
+        items:
+            type: "array"
+            $ref: "#/definitions/GraphicMeasurementFmDTO"
+      mappedPmpList:
+        items:
+            type: "array"
+            $ref: "#/definitions/MeasurementPmpDTO"
+      selectedFm:
+        type: "object"
+        $ref: "#/definitions/NominalFmDTO"
+  GraphicMeasurementFmDTO:
+    type: "object"
+    properties:
+      value:
+        type: "number"
+        example: 1.1
+      scan_date:
+        type: "string"
+        example: "10/10/2010"
+      toleranceType:
+        enum:
+          - "INTOL"
+          - "OUTOL"
+          - "NOT RECOGNIZED"
+        example: "INTOL"
+      ruleType:
+        items:
+          enum:
+            - "OUTSIDE CONTROL LIMITS"
+            - "PRESENCE OF CYCLES OR TRENDS"
+            - "STRATIFICATION OR FAILURE OF VARIABILITY"
+            - "SEQUENCE OF POINTS NEAR OF CONTROL LIMITS"
+            - "SEQUENCE OF POINTS ON THE SAME SIDE OF THE MIDLINE"
+          example: ["OUTSIDE CONTROL LIMITS","PRESENCE OF CYCLES OR TRENDS","STRATIFICATION OR FAILURE OF VARIABILITY"]
   ApiResponseError:
     type: "object"
     properties:
@@ -1316,4 +1568,3 @@ definitions:
       message:
         type: "string"
         example: "Invalid"
-  
