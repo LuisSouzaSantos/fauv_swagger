@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   description: "APIs to the FAUV Analyzer Application"
-  version: "12.0.0"
+  version: "12.1.0"
   title: "FAUV"
   license:
     name: "Apache 2.0"
@@ -1371,6 +1371,15 @@ definitions:
         type: "string"
         format: "1234567891"
         example: "888888888"
+      ak:
+        type: "integer"
+        example: 12
+      bk:
+        type: "integer"
+        example: 11  
+      io:
+        type: "integer"
+        example: 10           
       pmpSampleList:
         items:
           type: "array"
