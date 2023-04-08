@@ -1568,6 +1568,42 @@ definitions:
             - "SEQUENCE OF POINTS NEAR OF CONTROL LIMITS"
             - "SEQUENCE OF POINTS ON THE SAME SIDE OF THE MIDLINE"
           example: ["OUTSIDE CONTROL LIMITS","PRESENCE OF CYCLES OR TRENDS","STRATIFICATION OR FAILURE OF VARIABILITY"]
+  StatisticDTO:
+    type: "object"
+    properties:
+      carName:
+        type: "string"
+        example: "POLO"
+      partNumber:
+        type: "string"
+        example: "1111111"
+      unitName: 
+        type: "string"
+        example: "Imigrantes"
+      initDate:
+        type: "string"
+        example: "03/09/2022"
+      endDate:
+        type: "string"
+        example: "03/09/2023"
+      numberOfSamples:
+        type: "integer"
+        example: 30
+      numberOfDefectiveSamples:
+        type: "integer"
+        example: 30
+      totalAk:
+        type: "integer"
+        example: 3
+      totalBk:
+        type: "integer"
+        example: 3
+      totalIo:
+        type: "integer"
+        example: 3
+      sampleIds:
+        items:
+            type: "array"
   ApiResponseError:
     type: "object"
     properties:
