@@ -1483,91 +1483,6 @@ definitions:
       equipmentId:
         type: "number"
         example: 1
-  GraphicDTO:
-    type: "object"
-    properties:
-      fmName:
-        type: "string"
-        example: "FM_001"
-      catalogType:
-        enum :
-          - "GRUNDGEOMETRIE"
-          - "DICHTIGKEIT"
-          - "SYMMETRIEVERLAUF"
-          - "UMRISS UND BÜNDIGKEIT"
-          - "FMK PLUS"
-        example: "GRUNDGEOMETRIE"   
-      higherTolerance:
-        type: "number"
-        example: 2.7
-      lowerTolerance:
-        type: "number"
-        example: -0.3
-      nominalTolerance:
-        type: "number"
-        example: 1.2
-      zoneDivision:
-        type: "number"
-        example: 0.5
-      cp:
-        type: "number"
-        example: 0.5
-      cpk:
-        type: "number"
-        example: 0.5
-      pp:
-        type: "number"
-        example: 0.5
-      ppk:
-        type: "number"
-        example: 0.5
-      sigmaLevel:
-        type: "number"
-        example: 5.09
-      normalDistribution:
-        type: "string"
-        example: "1.2%"
-      average:
-        type: "string"
-        example: "2.5mm"
-      standardDeviation:
-        type: "string"
-        example: "3.5mm"
-      graphicMeasurementFmDTOList:
-        items:
-            type: "array"
-            $ref: "#/definitions/GraphicMeasurementFmDTO"
-      mappedPmpList:
-        items:
-            type: "array"
-            $ref: "#/definitions/MeasurementPmpDTO"
-      selectedFm:
-        type: "object"
-        $ref: "#/definitions/NominalFmDTO"
-  GraphicMeasurementFmDTO:
-    type: "object"
-    properties:
-      value:
-        type: "number"
-        example: 1.1
-      scan_date:
-        type: "string"
-        example: "10/10/2010"
-      toleranceType:
-        enum:
-          - "INTOL"
-          - "OUTOL"
-          - "NOT RECOGNIZED"
-        example: "INTOL"
-      ruleType:
-        items:
-          enum:
-            - "OUTSIDE CONTROL LIMITS"
-            - "PRESENCE OF CYCLES OR TRENDS"
-            - "STRATIFICATION OR FAILURE OF VARIABILITY"
-            - "SEQUENCE OF POINTS NEAR OF CONTROL LIMITS"
-            - "SEQUENCE OF POINTS ON THE SAME SIDE OF THE MIDLINE"
-          example: ["OUTSIDE CONTROL LIMITS","PRESENCE OF CYCLES OR TRENDS","STRATIFICATION OR FAILURE OF VARIABILITY"]
   StatisticDTO:
     type: "object"
     properties:
@@ -1604,6 +1519,111 @@ definitions:
       sampleIds:
         items:
             type: "array"
+  FmStatistic:
+    type: "object"
+    properties:
+      fmName:
+        type: "string"
+        example: "FM_001"
+      catalogType:
+        enum :
+          - "GRUNDGEOMETRIE"
+          - "DICHTIGKEIT"
+          - "SYMMETRIEVERLAUF"
+          - "UMRISS UND BÜNDIGKEIT"
+          - "FMK PLUS"
+        example: "GRUNDGEOMETRIE"
+      totalAk:
+        type: "integer"
+        example: 3
+      totalBk:
+        type: "integer"
+        example: 3
+      totalIo:
+        type: "integer"
+        example: 3
+      cp:
+        type: "number"
+        example: 0.5
+      cpk:
+        type: "number"
+        example: 0.5
+      pp:
+        type: "number"
+        example: 0.5
+      ppk:
+        type: "number"
+        example: 0.5
+      sigmaLevel:
+        type: "number"
+        example: 5.09
+      normalDistribution:
+        type: "string"
+        example: "1.2%"
+      average:
+        type: "string"
+        example: "2.5mm"
+      standardDeviation:
+        type: "string"
+        example: "3.5mm"
+      mappedPmpList:
+        items:
+          type: "string"
+          example: "['PONTO 1', 'PONTO 2']"
+      impactList:
+        items:
+          type: "string"
+          example: "['Jogo na lâmpada', 'Pode cair a roda']"
+      FmGraphic:
+        type: "object"
+        $ref: "#/definitions/FmGraphic"
+  FmGraphic:
+    type: "object"
+    properties:
+      higherTolerance:
+        type: "number"
+        example: 1.5,
+      lowerTolerance:
+        type: "number"
+        example: -1.5.
+      nominalTolerance:
+        type: "number"
+        example: 3.00
+      zoneDivision:
+        type: "number"
+        example: 0.5
+      detailedFmGraphicsList:
+         items:
+            type: "array"
+            $ref: "#/definitions/DetailedFmGraphic"
+  DetailedFmGraphic:
+    type: "object"
+    properties:
+      sampleId:
+        type: "number"
+        example: 1
+      pin:
+        type: "string"
+        example: "123312313"
+      updateDate:
+        type: "string"
+        example: "03/09/2023 13:40:00"
+      value:
+        type: "number"
+        example: 1.123
+      statisticCriteriaList:
+        items:
+          enum:
+            - "POINT_ABOVE_LCS"
+            - "POINT_BELOW_LCS"
+            - "FIFTEEN_CONSECUTIVE_POINS_IN_ZONE_C"
+            - "FOURTEEN_CONSECUTIVE_POINTS_ALTERNATING_UP_AND_DOWN"
+            - "EIGHT_CONSECURTIVE_POINTS_OUT_OF_ZONE_A"
+            - "TWO_OUT_OF_THREE_CONSECUTIVE_POINTS_IN_ZONE_A"
+            - "FOUR_OUT_OF_FIVE_CONSECUTIVE_POINTS_OUTSIDE_ZONE_C"
+            - "NINE_CONSECUTIVE_POINTS_ON_THE_SAME_SIDE_OF_THE_MIDDLE_LINE"
+            - "OUT_OF_TOLERANCE"
+          example: ["POINT_ABOVE_LCS","POINT_BELOW_LCS"]
   ApiResponseError:
     type: "object"
     properties:
