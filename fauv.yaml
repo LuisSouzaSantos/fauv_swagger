@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   description: "APIs to the FAUV Analyzer Application"
-  version: "12.1.0"
+  version: "13.0.0"
   title: "FAUV"
   license:
     name: "Apache 2.0"
@@ -841,6 +841,47 @@ paths:
             items:
               type: "array"
               $ref: "#/definitions/EmployeeDTO"
+  /statisticConfiguration:
+    put:
+      tags:
+      - "StatisticConfiguration"
+      summary:  "Update configuration"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/StatisticConfigurationForm"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/StatisticConfigurationDTO"
+    get:
+      tags:
+      - "StatisticConfiguration"
+      summary:  "get all configurations"
+      produces:
+      - "application/json"
+      responses:
+        "500":
+          description: "SERVER ERROR"
+          schema:
+            $ref: "#/definitions/ApiResponseError"
+        "200":
+          description: "OK"
+          schema:
+            items:
+              type: "array"
+              $ref: "#/definitions/StatisticConfigurationDTO"
 definitions:
   LoginForm:
     type: "object"
@@ -1624,6 +1665,93 @@ definitions:
             - "NINE_CONSECUTIVE_POINTS_ON_THE_SAME_SIDE_OF_THE_MIDDLE_LINE"
             - "OUT_OF_TOLERANCE"
           example: ["POINT_ABOVE_LCS","POINT_BELOW_LCS"]
+  StatisticConfigurationDTO:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+        example: 1
+      useCep:
+        type: "boolean"
+        example: true
+      cepSamples:
+        type: "number"
+        example: 25
+      useSpecification:
+        type: "boolean"
+        example: false
+      specificationSamples:
+        type: "number"
+        example:  25
+      useCpCpk:
+        type: "boolean"
+        example: true
+      cep:
+        type: "number"
+        example: 1
+      cpk:
+        type: "number"
+        example: 2
+      usePpPpk:
+        type: "boolean"
+        example: true
+      pp:
+        type: "number"
+        example: 1
+      ppk:
+        type: "number"
+        example: 5
+      useNormalDistribution:
+        type: "boolean"
+        example: true
+      useSigma:
+        type: "boolean"
+        example: true
+      model:
+        type: "object"
+        $ref: "#/definitions/ModelDTO"
+  StatisticConfigurationForm:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+        example: 1
+      useCep:
+        type: "boolean"
+        example: true
+      cepSamples:
+        type: "number"
+        example: 25
+      useSpecification:
+        type: "boolean"
+        example: false
+      specificationSamples:
+        type: "number"
+        example:  25
+      useCpCpk:
+        type: "boolean"
+        example: true
+      cep:
+        type: "number"
+        example: 1
+      cpk:
+        type: "number"
+        example: 2
+      usePpPpk:
+        type: "boolean"
+        example: true
+      pp:
+        type: "number"
+        example: 1
+      ppk:
+        type: "number"
+        example: 5
+      useNormalDistribution:
+        type: "boolean"
+        example: true
+      useSigma:
+        type: "boolean"
+        example: true
   ApiResponseError:
     type: "object"
     properties:
